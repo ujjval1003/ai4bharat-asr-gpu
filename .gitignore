@@ -1,0 +1,90 @@
+# ----------------------
+# Python cache
+# ----------------------
+ 
+**pycache**/
+*.py[cod]
+*$py.class
+ 
+# ----------------------
+# Virtual environments
+# ----------------------
+ 
+venv/
+env/
+.venv/
+ENV/
+ 
+# ----------------------
+# Generated project folders
+# (created by setup.sh)
+# ----------------------
+ 
+ai4bharat-nemo/
+nemo/
+ 
+# ----------------------
+# Secrets / tokens
+# ----------------------
+ 
+hgf-token.txt
+.env
+*.token
+*.key
+*.secret
+ 
+# ----------------------
+# Audio files
+# ----------------------
+ 
+*.wav
+*.mp3
+*.flac
+ 
+# ----------------------
+# Temporary / backup files
+# ----------------------
+ 
+*.bak
+*.tmp
+cmd-backup/
+ 
+# ----------------------
+# Logs
+# ----------------------
+ 
+*.log
+ 
+# ----------------------
+# Build / packaging
+# ----------------------
+ 
+build/
+dist/
+*.egg-info/
+.eggs/
+ 
+# ----------------------
+# IDE files
+# ----------------------
+ 
+.vscode/
+.idea/
+ 
+# ----------------------
+# OS generated files
+# ----------------------
+ 
+.DS_Store
+Thumbs.db
+ 
+# ----------------------
+# ML model files
+# ----------------------
+ 
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.safetensors
