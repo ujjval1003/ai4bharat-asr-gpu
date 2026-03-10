@@ -3,6 +3,8 @@
 
 # AI4Bharat Indic ASR (GPU Setup)
 
+![GitHub stars](https://img.shields.io/github/stars/ujjval1003/ai4bharat-asr-gpu)
+![Repo size](https://img.shields.io/github/repo-size/ujjval1003/ai4bharat-asr-gpu)
 ![Python](https://img.shields.io/badge/python-3.10-blue)
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS-lightgrey)
 ![PyTorch](https://img.shields.io/badge/PyTorch-CUDA-orange)
