@@ -117,7 +117,7 @@ Your setup script installs the **CUDA 12.6 wheel automatically**.
 ## 1 Clone repository
 
 ```
-git clone https://github.com/YOUR_USERNAME/ai4bharat-asr-gpu.git
+git clone https://github.com/ujjval1003/ai4bharat-asr-gpu.git
 cd ai4bharat-asr-gpu
 ```
 
