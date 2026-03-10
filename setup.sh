@@ -2,7 +2,7 @@
 set -e
 
 echo "🧹 Cleaning old environment..."
-deactivate 2>/dev/null || true
+command -v deactivate >/dev/null 2>&1 && deactivate || true
 rm -rf nemo ai4bharat-nemo _ai4bharat_nemo_src ~/.cache/torch_extensions ~/.cache/huggingface
 find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
@@ -41,7 +41,7 @@ pip install "transformers==4.36.2" --force-reinstall --no-deps
 pip install "tokenizers==0.15.2" --force-reinstall --no-deps
 pip install "numpy==1.26.4" --force-reinstall
 
-cd ~/AI4Bharat/ai4bharat-nemo
+cd ai4bharat-nemo
 
 echo "🔄 Resetting and patching hf_io_mixin.py..."
 git checkout -- nemo/core/classes/mixins/hf_io_mixin.py

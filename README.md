@@ -1,3 +1,6 @@
+
+---
+
 # AI4Bharat Indic ASR (GPU Setup)
 
 ![Python](https://img.shields.io/badge/python-3.10-blue)
@@ -5,17 +8,18 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-CUDA-orange)
 ![GPU](https://img.shields.io/badge/GPU-NVIDIA-green)
 ![NeMo](https://img.shields.io/badge/NVIDIA-NeMo-green)
+![Docker](https://img.shields.io/badge/docker-supported-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-A **GPU-accelerated setup** for running **AI4Bharat Indic ASR models** using NVIDIA NeMo.
+A **GPU-accelerated setup** for running **AI4Bharat Indic ASR models** using **NVIDIA NeMo**.
 
-This repository provides a **stable, patched environment** to run AI4Bharat models locally with **CUDA acceleration**.
+This repository provides a **stable, patched environment** to run AI4Bharat models locally with **CUDA acceleration**, **real-time streaming**, and **browser-based transcription UI**.
 
 ---
 
 # Tested Hardware
 
-This project was tested on the following system:
+This project was tested on the following system.
 
 | Component | Value                          |
 | --------- | ------------------------------ |
@@ -25,7 +29,7 @@ This project was tested on the following system:
 | Python    | 3.10                           |
 | Framework | NVIDIA NeMo                    |
 
-The setup script installs **CUDA 12.6 compatible PyTorch automatically**. 
+The setup script installs **CUDA-compatible PyTorch automatically**.
 
 ---
 
@@ -36,17 +40,22 @@ The setup script installs **CUDA 12.6 compatible PyTorch automatically**.
 | `indicconformer_stt_gu_hybrid_rnnt_large` | Gujarati     | Gujarati            |
 | `indic-conformer-600m-multilingual`       | Multilingual | 20+ Indic languages |
 
+The streaming ASR script supports **22 Indian languages**.
+
 ---
 
 # Features
 
 * GPU accelerated inference
 * Real-time streaming ASR
+* Terminal live transcription
 * Browser UI interface
-* 22 Indian languages supported
-* Continuous live transcription
-* VAD based utterance segmentation
+* 22 Indic languages supported
+* Continuous transcription mode
+* VAD-based utterance segmentation
 * Transcript export
+* Docker support
+* HuggingFace model caching
 
 ---
 
@@ -57,6 +66,7 @@ AI4Bharat-GPU/
 │
 ├── setup.sh
 ├── requirements.txt
+├── Dockerfile
 │
 ├── ai4bharat-gu.py
 ├── ai4bharat-mul.py
@@ -67,14 +77,15 @@ AI4Bharat-GPU/
 └── README.md
 ```
 
-| File             | Description                |
-| ---------------- | -------------------------- |
-| setup.sh         | Full GPU environment setup |
-| requirements.txt | Dependency versions        |
-| ai4bharat-gu.py  | Gujarati ASR example       |
-| ai4bharat-mul.py | Multilingual ASR example   |
-| live.py          | Terminal real-time ASR     |
-| live-ui.py       | Web UI ASR interface       |
+| File             | Description                    |
+| ---------------- | ------------------------------ |
+| setup.sh         | Complete GPU environment setup |
+| requirements.txt | Dependency versions            |
+| Dockerfile       | GPU Docker container           |
+| ai4bharat-gu.py  | Gujarati ASR example           |
+| ai4bharat-mul.py | Multilingual ASR example       |
+| live.py          | Terminal real-time ASR         |
+| live-ui.py       | Web UI ASR interface           |
 
 ---
 
@@ -82,14 +93,14 @@ AI4Bharat-GPU/
 
 Different CUDA versions require specific PyTorch builds.
 
-| CUDA Version  | PyTorch Wheel Index                      |
-| ------------- | ---------------------------------------- |
-| CUDA 11.8     | `https://download.pytorch.org/whl/cu118` |
-| CUDA 12.1     | `https://download.pytorch.org/whl/cu121` |
-| CUDA 12.4     | `https://download.pytorch.org/whl/cu124` |
-| **CUDA 12.6** | `https://download.pytorch.org/whl/cu126` |
+| CUDA Version  | PyTorch Wheel Index                                                              |
+| ------------- | -------------------------------------------------------------------------------- |
+| CUDA 11.8     | [https://download.pytorch.org/whl/cu118](https://download.pytorch.org/whl/cu118) |
+| CUDA 12.1     | [https://download.pytorch.org/whl/cu121](https://download.pytorch.org/whl/cu121) |
+| CUDA 12.4     | [https://download.pytorch.org/whl/cu124](https://download.pytorch.org/whl/cu124) |
+| **CUDA 12.6** | [https://download.pytorch.org/whl/cu126](https://download.pytorch.org/whl/cu126) |
 
-Example install command:
+Example installation:
 
 ```
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
@@ -99,9 +110,9 @@ Your setup script installs the **CUDA 12.6 wheel automatically**.
 
 ---
 
-# Installation
+# Installation (Local GPU Setup)
 
-## 1 Clone the repository
+## 1 Clone repository
 
 ```
 git clone https://github.com/YOUR_USERNAME/ai4bharat-asr-gpu.git
@@ -110,7 +121,7 @@ cd ai4bharat-asr-gpu
 
 ---
 
-# 2 Run setup
+## 2 Run setup script
 
 ```
 chmod +x setup.sh
@@ -128,7 +139,7 @@ The setup script automatically:
 
 ---
 
-# 3 Activate environment
+## 3 Activate environment
 
 ```
 source nemo/bin/activate
@@ -136,9 +147,9 @@ source nemo/bin/activate
 
 ---
 
-# 4 Login to HuggingFace
+## 4 Login to HuggingFace
 
-The models are gated, so you must login first.
+The models are gated.
 
 ```
 huggingface-cli login
@@ -152,7 +163,7 @@ huggingface-cli login
 python ai4bharat-gu.py
 ```
 
-Example model loading: 
+Example:
 
 ```python
 model = nemo_asr.models.ASRModel.from_pretrained(
@@ -160,7 +171,7 @@ model = nemo_asr.models.ASRModel.from_pretrained(
 )
 ```
 
-The script automatically uses **GPU if available**.
+GPU will be used automatically if available.
 
 ---
 
@@ -174,12 +185,12 @@ The script:
 
 * loads audio
 * converts to mono
-* resamples to **16kHz**
-* performs CTC and RNNT decoding
+* resamples to **16 kHz**
+* runs **CTC** and **RNNT** decoding
 
-Example usage: 
+Example:
 
-```python
+```
 transcription_ctc = model(wav, "gu", "ctc")
 ```
 
@@ -204,13 +215,9 @@ Example:
 python live.py --utterance --save
 ```
 
-The streaming script supports **22 Indic languages**. 
-
 ---
 
-# Web UI
-
-Run the browser interface:
+# Web UI (Browser Interface)
 
 ```
 python live-ui.py
@@ -224,27 +231,101 @@ http://127.0.0.1:7860
 
 Features:
 
-* Live transcription
-* Speech history
-* Export transcripts
-* Language selection
+* live transcription
+* transcript history
+* export transcripts
+* language selection
 * GPU acceleration
 
-Built with **Gradio**. 
+Built with **Gradio**.
+
+---
+
+# Docker Support
+
+You can run the entire system using Docker with GPU support.
+
+## Build Docker Image
+
+```
+docker build -t ai4bharat-asr-gpu .
+```
+
+---
+
+## Run Container
+
+```
+docker run -it \
+--gpus all \
+-p 7860:7860 \
+-v ~/.cache/huggingface:/root/.cache/huggingface \
+ai4bharat-asr-gpu
+```
+
+Explanation:
+
+| Flag                                               | Purpose                    |
+| -------------------------------------------------- | -------------------------- |
+| `--gpus all`                                       | Enables NVIDIA GPU access  |
+| `-p 7860:7860`                                     | Exposes Gradio UI          |
+| `-v ~/.cache/huggingface:/root/.cache/huggingface` | Persists downloaded models |
+
+---
+
+# Docker Hub Image
+
+You can pull the prebuilt image (~9GB).
+
+```
+docker pull ujjvalpatel1003/ai4bharat-asr-gpu
+```
+
+Run it:
+
+```
+docker run -it --gpus all -p 7860:7860 ujjvalpatel1003/ai4bharat-asr-gpu
+```
+
+---
+
+# Model Download
+
+Models download automatically on first run.
+
+Approximate size:
+
+```
+~1.8 GB
+```
+
+Cached in:
+
+```
+~/.cache/huggingface
+```
+
+If using Docker without volume mounting, the model will be stored in:
+
+```
+/root/.cache/huggingface
+```
+
+Mounting the cache directory prevents repeated downloads.
 
 ---
 
 # Audio Requirements
 
-Input audio format:
+Input audio must be:
 
 ```
 Format: WAV
 Channels: Mono
-Sample Rate: 16000 Hz
+Sample rate: 16000 Hz
 ```
 
-The scripts automatically resample audio if necessary.
+Scripts automatically resample audio if needed.
 
 ---
 
@@ -267,25 +348,7 @@ Pinned versions are listed in:
 requirements.txt
 ```
 
-to avoid compatibility issues. 
-
----
-
-# Model Download
-
-First run downloads the model automatically.
-
-Approximate size:
-
-```
-~1.8 GB
-```
-
-Cached in:
-
-```
-~/.cache/huggingface
-```
+to avoid compatibility issues.
 
 ---
 
@@ -293,4 +356,10 @@ Cached in:
 
 CPU-only version:
 
-https://github.com/ujjval1003/ai4bharat-asr-cpu
+[https://github.com/ujjval1003/ai4bharat-asr-cpu](https://github.com/ujjval1003/ai4bharat-asr-cpu)
+
+---
+
+# License
+
+MIT License
