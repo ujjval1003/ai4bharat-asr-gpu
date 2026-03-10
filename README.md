@@ -9,6 +9,8 @@
 ![GPU](https://img.shields.io/badge/GPU-NVIDIA-green)
 ![NeMo](https://img.shields.io/badge/NVIDIA-NeMo-green)
 ![Docker](https://img.shields.io/badge/docker-supported-blue)
+![Docker](https://img.shields.io/docker/pulls/ujjvalpatel1003/ai4bharat-asr-gpu)
+![Docker Image](https://img.shields.io/docker/image-size/ujjvalpatel1003/ai4bharat-asr-gpu/latest)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 A **GPU-accelerated setup** for running **AI4Bharat Indic ASR models** using **NVIDIA NeMo**.
