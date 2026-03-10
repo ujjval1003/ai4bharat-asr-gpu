@@ -258,11 +258,7 @@ docker build -t ai4bharat-asr-gpu .
 ## Run Container
 
 ```
-docker run -it \
---gpus all \
--p 7860:7860 \
--v ~/.cache/huggingface:/root/.cache/huggingface \
-ai4bharat-asr-gpu
+docker run -it --gpus all -p 7860:7860 ai4bharat-asr-gpu
 ```
 
 Explanation:
